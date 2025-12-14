@@ -65,10 +65,9 @@ func main() {
 	
 	r := mux.NewRouter()
 
-	api := r.PathPrefix("/api/v1").Subrouter()
 
 	// Register routes
-	authHandler.RegisterRoutes(*api)
+	authHandler.RegisterRoutes(r)
 
 	// Start server
 	port := os.Getenv("PORT")

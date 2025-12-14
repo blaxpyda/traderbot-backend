@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -66,10 +67,10 @@ func (h *authHandler) HandleCallBack(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Redirect back to mobile app with JWT token
-	redirectURL := "myapp://auth?token=" + jwtToken
+	redirectURL := os.Getenv("KT_REDIRECT_URL") + jwtToken
 	http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 }
 
-func (h *authHandler) RegisterRoutes(r mux.Router) {
+func (h *authHandler) RegisterRoutes(r *mux.Router) {
 	r.HandleFunc("/auth/callback", h.HandleCallBack).Methods("GET")
 }
